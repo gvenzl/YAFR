@@ -1,4 +1,4 @@
-package com.optit.log;
+package com.gvenzl.log;
 
 public interface Logger
 {

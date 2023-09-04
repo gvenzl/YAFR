@@ -1,4 +1,4 @@
-package com.optit;
+package com.gvenzl;
 
 import java.awt.Component;
 import java.awt.EventQueue;
@@ -17,9 +17,9 @@ import javax.swing.JTextField;
 
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 
-import com.optit.core.Renamer;
-import com.optit.gui.JLogArea;
-import com.optit.log.Logger;
+import com.gvenzl.core.Renamer;
+import com.gvenzl.gui.JLogArea;
+import com.gvenzl.log.Logger;
 import javax.swing.JScrollPane;
 
 public class YAFR {

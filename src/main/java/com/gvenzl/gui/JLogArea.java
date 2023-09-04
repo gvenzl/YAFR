@@ -1,8 +1,8 @@
-package com.optit.gui;
+package com.gvenzl.gui;
 
 import javax.swing.JTextArea;
 
-import com.optit.log.Logger;
+import com.gvenzl.log.Logger;
 
 public class JLogArea extends JTextArea implements Logger
 {

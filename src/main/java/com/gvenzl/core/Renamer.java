@@ -1,10 +1,10 @@
-package com.optit.core;
+package com.gvenzl.core;
 
 import java.io.File;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-import com.optit.log.Logger;
+import com.gvenzl.log.Logger;
 
 public class Renamer
 {

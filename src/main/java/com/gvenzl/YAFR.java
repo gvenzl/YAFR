@@ -67,15 +67,15 @@ public class YAFR {
     /**
      * Launch the application.
      */
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
                     YAFR window = new YAFR();
                     window.frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                }
+                catch (Exception e) {
+                      e.printStackTrace();
                 }
             }
         });
@@ -84,17 +84,14 @@ public class YAFR {
     /**
      * Create the application.
      */
-    public YAFR()
-    {
-        System.setProperty("apple.awt.fileDialogForDirectories", "true");
+    public YAFR() {
         initialize();
     }
 
     /**
      * Initialize the contents of the frame.
      */
-    private void initialize()
-    {
+    private void initialize() {
         frame = new JFrame();
         frame.setBounds(100, 100, 1024, 512);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -140,14 +137,15 @@ public class YAFR {
                     chooser.setVisible( true );
                     System.setProperty( "apple.awt.fileDialogForDirectories", "false" );
 
-                    if(chooser.getDirectory() != null)
+                    if(chooser.getDirectory() != null) {
                         directory.setText(chooser.getDirectory() + chooser.getFile());
-                    else
+                    }
+                    else {
                         directory.setText("");
+                    }
 
                 }
-                else
-                {
+                else {
                     JFileChooser chooser = new JFileChooser();
                     chooser.setDialogTitle("Select target folder or file");
                     chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
@@ -196,33 +194,26 @@ public class YAFR {
         frame.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{frame.getContentPane(), lblPattern, doRename, lblDirectory, pattern, logArea, chooseFilePath, lblNewLayout, newLayout, chckbxRecursive, directory}));
     }
 
-    private void rename()
-    {
+    private void rename() {
         // Only allow rename when all field are filled
-        if(directory.getText().isEmpty())
-        {
+        if(directory.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "The directory field is empty!", "Validation error", JOptionPane.ERROR_MESSAGE);
         }
-        else if (pattern.getText().isEmpty())
-        {
+        else if (pattern.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "The pattern field is empty!", "Validation error", JOptionPane.ERROR_MESSAGE);
         }
-        else if (newLayout.getText().isEmpty())
-        {
+        else if (newLayout.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "No new layout was defined!", "Validation error", JOptionPane.ERROR_MESSAGE);
         }
-        else
-        {
+        else {
             Renamer renamer = new Renamer(pattern.getText(), newLayout.getText(),
-                                            chckbxRecursive.isSelected(), chckbxAnalyzeOnly.isSelected(),
-                                            chckbxReplaceSpecialCharaters.isSelected(), (Logger)logArea);
-            try
-            {
+                                          chckbxRecursive.isSelected(), chckbxAnalyzeOnly.isSelected(),
+                                          chckbxReplaceSpecialCharaters.isSelected(), (Logger)logArea);
+            try {
                 renamer.rename(directory.getText());
                 JOptionPane.showMessageDialog(null, "Renaming done!", "Finish", JOptionPane.INFORMATION_MESSAGE);
             }
-            catch (Exception e)
-            {
+            catch (Exception e) {
                 ((Logger)logArea).log("Error during renaming: " + e.getMessage());
             }
         }

@@ -41,8 +41,9 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.1</version>
         <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
+          <source>17</source>
+          <target>17</target>
+          <encoding>UTF-8</encoding>
         </configuration>
       </plugin>
       <plugin>
@@ -54,7 +55,7 @@
           </descriptorRefs>
           <archive>
             <manifest>
-              <mainClass>com.optit.YAFR</mainClass>
+              <mainClass>com.gvenzl.YAFR</mainClass>
             </manifest>
           </archive>
         </configuration>

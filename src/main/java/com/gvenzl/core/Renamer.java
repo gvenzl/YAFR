@@ -35,8 +35,8 @@ import java.util.regex.PatternSyntaxException;
 
 import com.gvenzl.log.Logger;
 
-public class Renamer
-{
+public class Renamer {
+
     private final boolean recursive;
     private final boolean analyzeOnly;
     private final boolean replaceSpecialChars;
@@ -47,8 +47,8 @@ public class Renamer
     private Pattern regExReplace;
     private final Logger logger;
 
-    public Renamer(String pattern, String newLayout, boolean recursive, boolean analyzeOnly, boolean replaceSpecialChars, Logger logger)
-    {
+    public Renamer(String pattern, String newLayout, boolean recursive,
+                   boolean analyzeOnly,boolean replaceSpecialChars, Logger logger) {
         this.pattern = pattern;
         this.newLayout = newLayout;
         this.recursive = recursive;
@@ -57,72 +57,67 @@ public class Renamer
         this.logger = logger;
     }
 
-    public void rename(String dir)
-        throws Exception
-    {
+    public void rename(String dir) {
         logger.clear();
 
         // Only continue if both regular expressions are valid
-        if(parseRegEx())
-        {
+        if(parseRegEx()) {
             directory = new File(dir);
             logger.log("Renaming files...");
 
             // Get file list and iterate over them to rename
             File[] renameList;
             // If directory, get the content of it
-            if (directory.isDirectory())
+            if (directory.isDirectory()) {
                 renameList = directory.listFiles();
+            }
             // If single file, just replace single file
-            else
-                renameList = new File[] {directory};
+            else {
+                renameList = new File[] { directory };
+            }
 
-            for (File file : renameList)
-            {
+            for (File file : renameList) {
                 // If file is hidden, skip it!
-                if (file.isHidden())
+                if (file.isHidden()) {
                     continue;
+                }
 
-                // If file is a sub directory and recursive is set, rename content of sub directory
+                // If file is a subdirectory and recursive is set, rename content of subdirectory
                 if (file.isDirectory() && recursive &&
-                        (file.getName().compareTo(".")!=0) &&
-                        (file.getName().compareTo("..")!=0)
-                    )
-                {
-                    // Recursive call to rename sub directory files
+                        (!file.getName().equalsIgnoreCase(".")) &&
+                        (!file.getName().equalsIgnoreCase(".."))
+                    ) {
+                    // Recursive call to rename subdirectory files
                     rename(file.getAbsolutePath());
                 }
 
-                try
-                {
+                try {
                     String newFileName = file.getName();
-                    if (regExPattern.matcher(newFileName).matches())
-                    {
+                    if (regExPattern.matcher(newFileName).matches()) {
                         newFileName = regExPattern.matcher(file.getName()).replaceAll(regExReplace.toString());
                         // If special character replace is true then remove . and , from file name
-                        if (replaceSpecialChars)
+                        if (replaceSpecialChars) {
                             newFileName = newFileName.replaceAll("[\\.,_](?!\\w{3}$)", " ");
+                            }
                     }
 
                     logger.log("Renaming file \"" + file.getName() + "\" to \"" + newFileName);
                     newFileName = file.getParent() + "/" + newFileName;
 
                     // If not only analyze, rename file on file system
-                    if (!analyzeOnly)
+                    if (!analyzeOnly) {
                         file.renameTo(new File(newFileName));
+                    }
                 }
-                catch (Exception e)
-                {
+                catch (Exception e) {
                     logger.log("Error renaming the file " + file.getName() + ": " + e.getMessage());
                 }
             }
         }
     }
 
-    public boolean parseRegEx()
-    {
-        try
-        {
+    public boolean parseRegEx() {
+        try {
             logger.log("Pattern: " + pattern);
             regExPattern = Pattern.compile(pattern);
 
@@ -131,8 +126,7 @@ public class Renamer
 
             return true;
         }
-        catch (PatternSyntaxException e)
-        {
+        catch (PatternSyntaxException e) {
             logger.log("Invalid regular expression: " + e.getMessage());
             return false;
         }
